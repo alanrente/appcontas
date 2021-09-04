@@ -1,31 +1,40 @@
 import { Button, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export const FormCadastro = () => {
 
-    const [formValues, setFormValues] = useState({
+    const [devedor, setDevedor] = useState({
         nome: '',
         divida: ''
     })
     const [devedores, setDevedores] = useState([])
+    
+    useEffect(() => {
+        console.log(devedores)
+    }, [devedores]);
 
     function handleChange(event) {
         const { name, value } = event.target
         const newValue = {
-            ...formValues,
+            ...devedor,
             [name]: value
         }
-        setFormValues(newValue)
+
+        // verifica se o campo 'divida' é texto
+        const campo = [name][0]
+        const ehTexto = isNaN(value)
+        if (campo === 'divida' && ehTexto) return
+
+        setDevedor(newValue)
     }
 
     function handleSendForm(event) {
         event.preventDefault()
-        setDevedores([formValues])
-        console.log(devedores)
+        setDevedores([...devedores, devedor])
     }
 
     return (
-        <form onSubmit={handleSendForm} className="formCadastroDevedores">
+        <form className="formCadastroDevedores">
             <TextField
                 className="inputNome"
                 id="outlined-search"
@@ -33,7 +42,7 @@ export const FormCadastro = () => {
                 placeholder="Nome"
                 type="text"
                 name="nome"
-                value={formValues.nome}
+                value={devedor.nome}
                 onChange={handleChange}
             />
             <TextField
@@ -43,7 +52,7 @@ export const FormCadastro = () => {
                 placeholder="Divida"
                 type="number"
                 name="divida"
-                value={formValues.divida}
+                value={devedor.divida}
                 onChange={handleChange}
             />
             <Button
@@ -51,6 +60,7 @@ export const FormCadastro = () => {
                 variant="contained"
                 color="primary"
                 type="submit"
+                onClick={handleSendForm}
             >Enviar
             </Button>
         </form>
