@@ -1,12 +1,18 @@
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import { FormCadastro } from './components/FormCadastro';
+import { SomatorioDevedoresProvider } from './contexts/somatorioDevedores';
+import Routes from './routes';
 import './static/cadastroDevedores.css'
 
 function App() {
   return (
     <div className="App">
       <h1>App Contas</h1>
-      <FormCadastro/>
+      <BrowserRouter>
+        <SomatorioDevedoresProvider>
+            <Routes />
+        </SomatorioDevedoresProvider>
+      </BrowserRouter>
     </div>
   );
 }
