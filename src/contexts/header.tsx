@@ -3,13 +3,29 @@ import { useHistory } from "react-router-dom";
 
 import { Button, Divider } from "@material-ui/core";
 
-export const Header = createContext<any>([]);
+import { Cartao } from "../pages/Cartao";
+import { Devedor } from "../pages/Devedor";
+import { Home } from "../pages/Home";
+
+export const HeaderContext = createContext<any>([]);
+
+export type ButtonRoute = {
+  text: string;
+  uri: string;
+  component: () => JSX.Element;
+};
 
 export function HeaderProvider({ children }: any) {
   const router = useHistory();
 
+  const buttonRoutes: ButtonRoute[] = [
+    { text: "Home", uri: "/", component: () => <Home /> },
+    { text: "Devedores", uri: "/devedores", component: () => <Devedor /> },
+    { text: "Cartões", uri: "/cartoes", component: () => <Cartao /> },
+  ];
+
   return (
-    <Header.Provider value={{}}>
+    <HeaderContext.Provider value={{ buttonRoutes }}>
       <div
         style={{
           display: "flex",
@@ -19,15 +35,14 @@ export function HeaderProvider({ children }: any) {
         }}
         className="header"
       >
-        <Button variant="outlined" onClick={() => router.push("/")}>
-          Home
-        </Button>
-        <Button variant="outlined" onClick={() => router.push("/cadastro")}>
-          Cadastrar
-        </Button>
+        {buttonRoutes.map((route: ButtonRoute) => (
+          <Button variant="outlined" onClick={() => router.push(route.uri)}>
+            {route.text}
+          </Button>
+        ))}
       </div>
       <Divider />
       {children}
-    </Header.Provider>
+    </HeaderContext.Provider>
   );
 }

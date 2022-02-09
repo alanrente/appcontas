@@ -1,13 +1,16 @@
 import { Route } from "react-router-dom";
 
-import { FormCadastro } from "../components/FormCadastro";
-import { Home } from "../pages/Home";
+import { ButtonRoute } from "../contexts/header";
+import { useHeaderContext } from "../hooks/useHeaderContext";
 
 export default function Routes() {
+  const { buttonRoutes } = useHeaderContext();
+
   return (
     <>
-      <Route path="/" exact component={Home} />
-      <Route path="/cadastro" component={FormCadastro} />
+      {buttonRoutes.map((route: ButtonRoute) => (
+        <Route path={route.uri} exact component={route.component} />
+      ))}
     </>
   );
 }
