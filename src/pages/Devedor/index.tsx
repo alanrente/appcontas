@@ -11,6 +11,7 @@ export function Devedor() {
     return data;
   }
 
+  // apagar depois a maneira que está sendo usado o post
   async function handleAdicionarDevedor() {
     const data = await upsertDevedor("teste");
 
