@@ -27,6 +27,7 @@ export function CartaoForm(props: Props) {
         visible={visible}
         onCancel={onCancel}
         okText="Salvar"
+        closable={false}
         onOk={(e: any) => {
           formik.handleSubmit(e);
           onCancel();
