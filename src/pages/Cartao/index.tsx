@@ -23,7 +23,11 @@ export function Cartao() {
         <SectionCartao>
           {cartoes &&
             cartoes.map((cartao) => (
-              <StyledCartao onClick={() => handleOpenModal(cartao.id)}>{cartao.bank}</StyledCartao>
+              <>
+                <StyledCartao onClick={() => handleOpenModal(cartao.id)}>{cartao.bank}</StyledCartao>
+                <StyledCartao onClick={() => handleOpenModal(cartao.id)}>{cartao.bank}</StyledCartao>
+                <StyledCartao onClick={() => handleOpenModal(cartao.id)}>{cartao.bank}</StyledCartao>
+              </>
             ))}
         </SectionCartao>
       </ContainerCartao>
