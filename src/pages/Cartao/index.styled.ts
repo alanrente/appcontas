@@ -45,23 +45,3 @@ export const SectionCartao = styled.section`
 
   z-index: 1;
 `;
-
-export const StyledCartao = styled.div`
-  padding: 1rem;
-
-  border-radius: 5px;
-
-  min-height: 4rem;
-
-  color: #fff;
-  font-weight: bold;
-  font-size: 1.25rem;
-
-  background: #788;
-
-  :hover {
-    cursor: pointer;
-
-    box-shadow: 0.25rem 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.3);
-  }
-`;
