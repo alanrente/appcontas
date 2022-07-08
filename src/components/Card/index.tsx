@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Cartao } from "interfaces/Cartao";
 
 import { NumberCard, StyledCard } from "./styled";
@@ -16,6 +14,7 @@ export function Card({ onClick, children, cartao }: Prop) {
   }
 
   function handleFormatDate(date: string) {
+    console.log(date);
     const [year, month, day] = date.split("-");
 
     return `${day}/${month}/${year}`;
@@ -24,7 +23,7 @@ export function Card({ onClick, children, cartao }: Prop) {
   return (
     <StyledCard onClick={handleOnClick}>
       {children}
-      <label>Cartão: {cartao.bank.toUpperCase()}</label>
+      <label>Cartão: {cartao.bank}</label>
       <NumberCard>XXXX.XXXX.XXXX.{cartao.final_number}</NumberCard>
       <label>vencimento: {handleFormatDate(cartao.vencimento)}</label>
     </StyledCard>

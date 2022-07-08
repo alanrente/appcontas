@@ -17,6 +17,8 @@ export function useCartao() {
   async function handleLoadCartoes() {
     const data = await obterCartoes();
 
+    console.log(data);
+
     const tempCartao: Cartao[] = [
       {
         id: 5005,

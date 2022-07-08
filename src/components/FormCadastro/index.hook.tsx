@@ -2,12 +2,8 @@ import { useEffect, useState } from "react";
 
 import { useFormik } from "formik";
 
-import { useSomatorioContext } from "../../hooks/useSomatorioContext";
-
 export function useFormCadastro() {
   const [devedores, setDevedores] = useState<any[]>([]);
-
-  const { somatorio, setSomatorio } = useSomatorioContext();
 
   const formik = useFormik({
     initialValues: {
@@ -18,7 +14,6 @@ export function useFormCadastro() {
       setDevedores([...devedores, values]);
       formik.setFieldValue("nome", "");
       formik.setFieldValue("divida", 0);
-      setSomatorio(somatorio + values.divida);
     },
   });
 
