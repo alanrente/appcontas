@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 
 import { Button, Divider } from "@material-ui/core";
 
+import { Gasto } from "pages/Gasto";
+
 import { Cartao } from "../pages/Cartao";
 import { Devedor } from "../pages/Devedor";
 import { Home } from "../pages/Home";
@@ -22,6 +24,7 @@ export function HeaderProvider({ children }: any) {
     { text: "Home", uri: "/", component: () => <Home /> },
     { text: "Devedores", uri: "/devedores", component: () => <Devedor /> },
     { text: "Cartões", uri: "/cartoes", component: () => <Cartao /> },
+    { text: "Gastos", uri: "/gastos", component: () => <Gasto /> },
   ];
 
   return (
