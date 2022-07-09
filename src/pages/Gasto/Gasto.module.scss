@@ -1,0 +1,19 @@
+.descricao {
+  border: dotted 1px;
+  text-align: left;
+  padding: 2px;
+
+}
+
+.descricao:first-letter {
+  text-transform: capitalize;
+}
+
+.header {
+  letter-spacing: 2px;
+  font-weight: 500;
+  font-size: medium;
+
+  background-color: rgba(202, 202, 202, 0.459);
+  border-radius: 25px 25px 0 0;
+}
