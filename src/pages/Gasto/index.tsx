@@ -1,3 +1,7 @@
+import { useGasto } from "./index.hook";
+
 export function Gasto() {
-  return <>Pagina gasto</>;
+  const { gastos } = useGasto();
+
+  return <>Pagina gasto {gastos}</>;
 }
