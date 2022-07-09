@@ -1,7 +1,9 @@
 import { createContext } from "react";
 import { useHistory } from "react-router-dom";
 
-import { Button, Divider } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
+
+import { ButtonStyled } from "components/ButtonStyled";
 
 import { Gasto } from "pages/Gasto";
 
@@ -39,9 +41,7 @@ export function HeaderProvider({ children }: any) {
         className="header"
       >
         {buttonRoutes.map((route: ButtonRoute) => (
-          <Button variant="outlined" onClick={() => router.push(route.uri)}>
-            {route.text}
-          </Button>
+          <ButtonStyled content={route.text} onClick={() => router.push(route.uri)} />
         ))}
       </div>
       <Divider />
