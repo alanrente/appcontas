@@ -1,7 +1,8 @@
 export interface Cartao {
-  bank: string;
   id?: number;
-  vencimento: string;
+  nome: string;
+  dia_vencimento: number;
   buy_date_best?: string;
-  final_number?: string;
+  final_numero?: string;
+  obs?: string;
 }

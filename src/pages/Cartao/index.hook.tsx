@@ -15,14 +15,16 @@ export function useCartao() {
   }
 
   async function handleLoadCartoes() {
-    const data = await obterCartoes();
+    const data: Cartao[] = await obterCartoes();
+
+    console.log(data);
 
     const tempCartao: Cartao[] = [
       {
         id: 5005,
-        bank: "bradesco",
-        final_number: "1234",
-        vencimento: "2020-05-20",
+        nome: "bradesco",
+        final_numero: "1234",
+        dia_vencimento: 20,
       },
     ];
 
