@@ -1,10 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+import { Gasto } from "interfaces/Gasto";
 
 import { getFaturas } from "services/gastos";
 
 export function useGasto() {
+  const [faturaMes, setFaturaMes] = useState<Gasto[]>([]);
+
   async function buscarFaturas() {
-    await getFaturas();
+    const gastos = await getFaturas();
+
+    setFaturaMes(gastos);
   }
 
   useEffect(() => {
@@ -12,6 +18,7 @@ export function useGasto() {
   }, []);
 
   return {
+    faturaMes,
     gastos: "gastos",
   };
 }
