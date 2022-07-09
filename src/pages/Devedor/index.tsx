@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { Typography } from "@material-ui/core";
 
-import { getDevedores, upsertDevedor } from "../../services/devedores/index";
+import { getDevedores } from "../../services/devedores/index";
 
 export function Devedor() {
   async function handleGetDevedores() {
@@ -11,16 +11,8 @@ export function Devedor() {
     return data;
   }
 
-  // apagar depois a maneira que está sendo usado o post
-  async function handleAdicionarDevedor() {
-    const data = await upsertDevedor("teste");
-
-    return data;
-  }
-
   useEffect(() => {
     handleGetDevedores();
-    handleAdicionarDevedor();
   }, []);
 
   return (
