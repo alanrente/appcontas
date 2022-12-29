@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+import { FirebaseError } from "firebase/app";
 import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
 
 import { auth } from "services/firebase";
@@ -10,7 +11,7 @@ export function useLoginGoogle() {
   async function clicar() {
     const provider = new GoogleAuthProvider();
 
-    const googleResponse = await signInWithPopup(auth, provider).catch(() => alert("Error"));
+    const googleResponse = await signInWithPopup(auth, provider).catch((err: FirebaseError) => alert(err.code));
 
     if (!googleResponse) return;
 
