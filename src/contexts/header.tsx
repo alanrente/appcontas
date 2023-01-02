@@ -5,10 +5,11 @@ import { Divider } from "@material-ui/core";
 
 import { ButtonStyled } from "components/ButtonStyled";
 
-import { Gasto } from "pages/Gasto";
-
 import { Cartao } from "../pages/Cartao";
+import { Compra } from "../pages/Compra";
 import { Devedor } from "../pages/Devedor";
+import { Gasto } from "../pages/Gasto";
+
 import { Home } from "../pages/Home";
 
 export const HeaderContext = createContext<any>([]);
@@ -27,6 +28,7 @@ export function HeaderProvider({ children }: any) {
     { text: "Devedores", uri: "/devedores", component: () => <Devedor /> },
     { text: "Cartões", uri: "/cartoes", component: () => <Cartao /> },
     { text: "Gastos", uri: "/gastos", component: () => <Gasto /> },
+    { text: "Compras", uri: "/compras", component: () => <Compra /> },
   ];
 
   return (

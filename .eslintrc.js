@@ -32,7 +32,7 @@ module.exports = {
     "import-helpers/order-imports": [
       "warn",
       {
-        newlinesBetween: "always", // new line between groups
+        newlinesBetween: "ignore", // new line between groups
         groups: [
           "/^react/",
           "/^fortawesome/",

@@ -1,7 +1,8 @@
+import { Devedores } from "interfaces/Devedores";
 import axios from "axios";
 
 export async function getDevedores() {
   const { data } = await axios.get("/pessoas");
 
-  console.log(data);
+  return data as Devedores[];
 }
