@@ -1,41 +1,61 @@
 import { useState, useEffect } from "react";
 
 import { FirebaseError } from "firebase/app";
-import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
+import { IUserSession, TypeSession } from "interfaces/TypesSessions";
+import { googleAuth } from "services/auth";
 import { auth } from "services/firebase";
 
 export function useLoginGoogle() {
   const [googleUrlPhoto, setGoogleUrlPhoto] = useState<string>();
 
-  async function clicar() {
+  async function login() {
     const provider = new GoogleAuthProvider();
 
-    const googleResponse = await signInWithPopup(auth, provider).catch((err: FirebaseError) => alert(err.code));
+    const { user } = await signInWithPopup(auth, provider)
+      .then((res) => res)
+      .catch((err: FirebaseError) => {
+        alert(err.code);
+        throw new Error(err.code);
+      });
 
-    if (!googleResponse) return;
+    if (!user) return;
+    if (!user.email) return;
+    if (!user.displayName) return;
+    if (!user.photoURL) return;
 
-    setGoogleUrlPhoto(googleResponse.user.photoURL as string);
+    const userAuth = await googleAuth(user.email, user.uid);
 
-    window.sessionStorage.setItem("@user", JSON.stringify(googleResponse.user));
+    const userSession: IUserSession = {
+      user: user.displayName,
+      token: userAuth.token,
+      urlPhoto: user.photoURL,
+    };
+
+    setGoogleUrlPhoto(userSession.urlPhoto);
+
+    window.sessionStorage.setItem(TypeSession.keyUser, JSON.stringify(userSession));
+
+    window.location.assign("/home");
   }
 
   function logout() {
     setGoogleUrlPhoto("");
-    window.sessionStorage.removeItem("@user");
+    window.sessionStorage.removeItem(TypeSession.keyUser);
   }
 
   useEffect(() => {
-    const getUserLocation = window.sessionStorage.getItem("@user");
-    const userLocation: User = JSON.parse(getUserLocation || "{}");
+    const getUserSession = window.sessionStorage.getItem(TypeSession.keyUser);
+    const userSession: IUserSession = JSON.parse(getUserSession || "{}");
 
-    if (Object.keys(userLocation).length === 0) return;
+    if (Object.keys(userSession).length === 0) return;
 
-    setGoogleUrlPhoto(userLocation.photoURL as string);
+    setGoogleUrlPhoto(userSession.urlPhoto as string);
   }, []);
 
   return {
-    clicar,
+    clicar: login,
     googleUrlPhoto,
     logout,
   };
