@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { useFormik } from "formik";
 import { Devedores } from "interfaces/Devedores";
 import { useCartao } from "pages/Cartao/index.hook";
 import { getDevedores } from "services/devedores";
-import { useFormik } from "formik";
 
 export function useCompraForm() {
   const { cartoes } = useCartao();

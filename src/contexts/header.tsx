@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import { Divider } from "@material-ui/core";
 
+import { TypeSession } from "interfaces/TypesSessions";
 import { ButtonStyled } from "components/ButtonStyled";
 
 import { Cartao } from "pages/Cartao";
@@ -11,7 +12,6 @@ import { Devedor } from "pages/Devedor";
 import { Gasto } from "pages/Gasto";
 import { Home } from "pages/Home";
 import { Login } from "pages/Login";
-import { TypeSession } from "interfaces/TypesSessions";
 
 export const HeaderContext = createContext<any>([]);
 

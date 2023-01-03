@@ -10,6 +10,7 @@ import App from "./App";
 import "./styles/global.scss";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
 // eslint-disable-next-line no-console
 console.log(process.env.NODE_ENV);
 
