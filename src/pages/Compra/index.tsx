@@ -1,7 +1,7 @@
 import { useEffect } from "react";
+import { HiOutlinePlus } from "react-icons/hi";
 import { ButtonStyled } from "components/ButtonStyled";
 import { CompraForm } from "components/CompraForm";
-
 import { useCompra } from "./index.hook";
 
 export function Compra() {
@@ -28,7 +28,7 @@ export function Compra() {
         }}
       >
         <h1>Page Compra</h1>
-        <ButtonStyled content="+" onClick={() => setVisibleFormCompras(true)} />
+        <ButtonStyled content="Novo" onClick={() => setVisibleFormCompras(true)} icon={<HiOutlinePlus />} />
       </div>
       <label>Compras:</label>
       {compras &&

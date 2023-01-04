@@ -15,10 +15,10 @@ export function Cartao() {
       <ContainerCartao>
         <SectionCartao>
           {cartoes &&
-            cartoes.map((cartao) => (
+            cartoes.map((cartao, i) => (
               <>
                 {/* <StyledCartao onClick={() => handleOpenModal(cartao.id)}>{cartao.bank}</StyledCartao> */}
-                <Card onClick={() => handleOpenModal(cartao.id || 0)} cartao={cartao} />
+                <Card key={`${i}`} onClick={() => handleOpenModal(cartao.id || 0)} cartao={cartao} />
               </>
             ))}
         </SectionCartao>

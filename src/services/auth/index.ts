@@ -8,7 +8,7 @@ export async function googleAuth(username: string, googleUid: string) {
       status,
     }))
     .catch((err) => {
-      throw new Error(err);
+      alert(err.message);
     });
 
   return user;

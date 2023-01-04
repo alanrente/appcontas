@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -9,10 +10,14 @@ import App from "./App";
 
 import "./styles/global.scss";
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+const { REACT_APP_API_URL, NODE_ENV } = process.env;
 
-// eslint-disable-next-line no-console
-console.log(process.env.NODE_ENV);
+const nameHost = window.location.hostname;
+console.log("nameHost: ", nameHost);
+console.log("apiHost: ", REACT_APP_API_URL);
+console.log("environment: ", NODE_ENV);
+
+axios.defaults.baseURL = REACT_APP_API_URL;
 
 ReactDOM.render(
   <React.StrictMode>

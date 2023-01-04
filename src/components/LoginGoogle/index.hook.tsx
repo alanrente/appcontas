@@ -27,6 +27,8 @@ export function useLoginGoogle() {
 
     const userAuth = await googleAuth(user.email, user.uid);
 
+    if (!userAuth) return;
+
     const userSession: IUserSession = {
       user: user.displayName,
       token: userAuth.token,

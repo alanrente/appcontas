@@ -1,9 +1,13 @@
 import { createContext, useState } from "react";
+import { AiOutlineHome } from "react-icons/ai";
+import { IoIosPeople } from "react-icons/io";
+import { FaFileInvoiceDollar, FaMoneyBillWaveAlt } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 
 import { Divider } from "@material-ui/core";
 
 import { TypeSession } from "interfaces/TypesSessions";
+import CardsImg from "static/svgs/cards_img";
 import { ButtonStyled } from "components/ButtonStyled";
 
 import { Cartao } from "pages/Cartao";
@@ -19,6 +23,7 @@ export type ButtonRoute = {
   text: string;
   uri: string;
   component: () => JSX.Element;
+  icon: JSX.Element;
 };
 
 export function HeaderProvider({ children }: any) {
@@ -36,23 +41,27 @@ export function HeaderProvider({ children }: any) {
   });
 
   const buttonRoutes: ButtonRoute[] = [
-    { text: "Home", uri: "/home", component: () => <Home /> },
-    { text: "Devedores", uri: "/devedores", component: () => <Devedor /> },
-    { text: "Cartões", uri: "/cartoes", component: () => <Cartao /> },
-    { text: "Gastos", uri: "/gastos", component: () => <Gasto /> },
-    { text: "Compras", uri: "/compras", component: () => <Compra /> },
+    { text: "Home", uri: "/home", component: () => <Home />, icon: <AiOutlineHome /> },
+    { text: "Devedores", uri: "/devedores", component: () => <Devedor />, icon: <IoIosPeople /> },
+    { text: "Cartões", uri: "/cartoes", component: () => <Cartao />, icon: <CardsImg /> },
+    { text: "Gastos", uri: "/gastos", component: () => <Gasto />, icon: <FaFileInvoiceDollar /> },
+    { text: "Compras", uri: "/compras", component: () => <Compra />, icon: <FaMoneyBillWaveAlt /> },
   ];
 
   return (
     <HeaderContext.Provider value={{ buttonRoutes }}>
       {!usuario ? (
-        <Login />
+        <>
+          {history.push("/")}
+          <Login />
+        </>
       ) : (
         <>
           <div
             style={{
               display: "flex",
               flexDirection: "row",
+              flexWrap: "wrap",
               gap: ".5rem",
               padding: ".5rem .2rem",
             }}
@@ -60,14 +69,19 @@ export function HeaderProvider({ children }: any) {
           >
             {buttonRoutes
               .filter((route) => route.uri !== "/")
-              .map((route: ButtonRoute) => (
-                <ButtonStyled content={route.text} onClick={() => history.push(route.uri)} />
+              .map((route: ButtonRoute, index) => (
+                <ButtonStyled
+                  key={`${index}`}
+                  content={route.text as string}
+                  onClick={() => history.push(route.uri)}
+                  icon={route.icon}
+                />
               ))}
           </div>
           <Divider />
-          {children}
         </>
       )}
+      {children}
     </HeaderContext.Provider>
   );
 }

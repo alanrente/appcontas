@@ -9,8 +9,8 @@ export default function Routes() {
 
   return (
     <>
-      {buttonRoutes.map((route: ButtonRoute) => (
-        <Route path={route.uri} exact component={route.component} />
+      {buttonRoutes.map((route: ButtonRoute, index: number) => (
+        <Route key={`${index}`} path={route.uri} exact component={route.component} />
       ))}
     </>
   );
