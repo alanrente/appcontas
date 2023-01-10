@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import { AiOutlineHome } from "react-icons/ai";
-import { IoIosPeople } from "react-icons/io";
 import { FaFileInvoiceDollar, FaMoneyBillWaveAlt } from "react-icons/fa";
+import { IoIosPeople } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 
 import { Divider } from "@material-ui/core";
@@ -16,6 +16,8 @@ import { Devedor } from "pages/Devedor";
 import { Gasto } from "pages/Gasto";
 import { Home } from "pages/Home";
 import { Login } from "pages/Login";
+
+import styleHeader from "../styles/HeaderContext.module.scss";
 
 export const HeaderContext = createContext<any>([]);
 
@@ -56,7 +58,7 @@ export function HeaderProvider({ children }: any) {
           <Login />
         </>
       ) : (
-        <>
+        <div className={styleHeader.headerContext}>
           <div
             style={{
               display: "flex",
@@ -78,9 +80,17 @@ export function HeaderProvider({ children }: any) {
                 />
               ))}
           </div>
-          <Divider />
-        </>
+          <div
+            style={{
+              alignSelf: "flex-end",
+              justifySelf: "end",
+            }}
+          >
+            logout
+          </div>
+        </div>
       )}
+      <Divider />
       {children}
     </HeaderContext.Provider>
   );
