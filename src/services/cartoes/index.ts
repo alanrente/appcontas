@@ -1,3 +1,4 @@
+import { getBearerToken } from "utils/getBearerToken";
 import axios, { AxiosRequestConfig } from "axios";
 
 export async function obterCartoes() {
@@ -5,8 +6,7 @@ export async function obterCartoes() {
     method: "GET",
     url: `/cartoes`,
     headers: {
-      accept: "*/*",
-      "content-type": "application/json",
+      Authorization: getBearerToken(),
     },
   };
 

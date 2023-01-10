@@ -1,19 +1,9 @@
-import { useEffect } from "react";
-
 import { Typography } from "@material-ui/core";
-
-import { getDevedores } from "../../services/devedores/index";
+import { useDevedor } from "./index.hook";
 
 export function Devedor() {
-  async function handleGetDevedores() {
-    const data = await getDevedores();
-
-    return data;
-  }
-
-  useEffect(() => {
-    handleGetDevedores();
-  }, []);
+  const devedores = useDevedor();
+  devedores;
 
   return (
     <>
