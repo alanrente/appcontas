@@ -1,7 +1,7 @@
 import { useLoginGoogle } from "./index.hook";
 
 export function LoginGoogle() {
-  const { clicar, googleUrlPhoto, logout } = useLoginGoogle();
+  const { login, googleUrlPhoto } = useLoginGoogle();
 
   return (
     <>
@@ -17,8 +17,7 @@ export function LoginGoogle() {
           />
         </div>
       )}
-      <button onClick={clicar}>Login Google</button>
-      <button onClick={logout}>Logout</button>
+      <button onClick={login}>Login Google</button>
     </>
   );
 }
