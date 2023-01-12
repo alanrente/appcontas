@@ -1,15 +1,16 @@
 import { createContext, useState } from "react";
-import { AiOutlineHome } from "react-icons/ai";
+import { AiOutlineHome, AiOutlineLogout } from "react-icons/ai";
 import { FaFileInvoiceDollar, FaMoneyBillWaveAlt } from "react-icons/fa";
 import { IoIosPeople } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 
 import { Divider } from "@material-ui/core";
 
+import { Role } from "interfaces/Roles";
 import { TypeSession } from "interfaces/TypesSessions";
 import CardsImg from "static/svgs/cards_img";
 import { ButtonStyled } from "components/ButtonStyled";
-
+import { useLoginGoogle } from "components/LoginGoogle/index.hook";
 import { Cartao } from "pages/Cartao";
 import { Compra } from "pages/Compra";
 import { Devedor } from "pages/Devedor";
@@ -26,10 +27,13 @@ export type ButtonRoute = {
   uri: string;
   component: () => JSX.Element;
   icon: JSX.Element;
+  roles: Role[];
 };
 
 export function HeaderProvider({ children }: any) {
   const history = useHistory();
+
+  const { logout } = useLoginGoogle();
 
   const [usuario] = useState(() => {
     const hasUserInSession = !!sessionStorage.getItem(TypeSession.keyUser);
@@ -43,12 +47,35 @@ export function HeaderProvider({ children }: any) {
   });
 
   const buttonRoutes: ButtonRoute[] = [
-    { text: "Home", uri: "/home", component: () => <Home />, icon: <AiOutlineHome /> },
-    { text: "Devedores", uri: "/devedores", component: () => <Devedor />, icon: <IoIosPeople /> },
-    { text: "Cartões", uri: "/cartoes", component: () => <Cartao />, icon: <CardsImg /> },
-    { text: "Gastos", uri: "/gastos", component: () => <Gasto />, icon: <FaFileInvoiceDollar /> },
-    { text: "Compras", uri: "/compras", component: () => <Compra />, icon: <FaMoneyBillWaveAlt /> },
+    { text: "Home", uri: "/home", component: () => <Home />, icon: <AiOutlineHome />, roles: [] },
+    { text: "Devedores", uri: "/devedores", component: () => <Devedor />, icon: <IoIosPeople />, roles: [Role.ADMIN] },
+    { text: "Cartões", uri: "/cartoes", component: () => <Cartao />, icon: <CardsImg />, roles: [Role.ADMIN] },
+    {
+      text: "Gastos",
+      uri: "/gastos",
+      component: () => <Gasto />,
+      icon: <FaFileInvoiceDollar />,
+      roles: [Role.USER, Role.ADMIN],
+    },
+    {
+      text: "Compras",
+      uri: "/compras",
+      component: () => <Compra />,
+      icon: <FaMoneyBillWaveAlt />,
+      roles: [Role.ADMIN],
+    },
   ];
+
+  function handleLogout() {
+    logout();
+    window.location.assign("/");
+  }
+
+  function showButtonsFromRole() {
+    const { profile } = JSON.parse(window.sessionStorage.getItem(TypeSession.keyUser) || "{}");
+
+    return buttonRoutes.filter((btn) => btn.roles.some((role) => role === profile.role) || btn.roles.length === 0);
+  }
 
   return (
     <HeaderContext.Provider value={{ buttonRoutes }}>
@@ -69,24 +96,17 @@ export function HeaderProvider({ children }: any) {
             }}
             className="header"
           >
-            {buttonRoutes
-              .filter((route) => route.uri !== "/")
-              .map((route: ButtonRoute, index) => (
-                <ButtonStyled
-                  key={`${index}`}
-                  content={route.text as string}
-                  onClick={() => history.push(route.uri)}
-                  icon={route.icon}
-                />
-              ))}
+            {showButtonsFromRole().map((route: ButtonRoute, index) => (
+              <ButtonStyled
+                key={`${index}`}
+                content={route.text as string}
+                onClick={() => history.push(route.uri)}
+                icon={route.icon}
+              />
+            ))}
           </div>
-          <div
-            style={{
-              alignSelf: "flex-end",
-              justifySelf: "end",
-            }}
-          >
-            logout
+          <div className={styleHeader.logout}>
+            <ButtonStyled content="Logout" icon={<AiOutlineLogout />} onClick={handleLogout} />
           </div>
         </div>
       )}
