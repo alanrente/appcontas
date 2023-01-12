@@ -32,6 +32,7 @@ export function useLoginGoogle() {
     const userSession: IUserSession = {
       user: user.displayName,
       token: userAuth.token,
+      profile: userAuth.profile,
       urlPhoto: user.photoURL,
     };
 
@@ -57,7 +58,7 @@ export function useLoginGoogle() {
   }, []);
 
   return {
-    clicar: login,
+    login,
     googleUrlPhoto,
     logout,
   };

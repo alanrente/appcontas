@@ -5,10 +5,14 @@ export const StyledButton = styled.button`
 
   min-height: 40px;
   min-width: 70px;
+  display: flex;
+  justify-content: center;
 
   svg {
     width: 25px;
     height: 25px;
+    align-self: center;
+    color: #4c4c4c;
   }
 
   .contentText {
