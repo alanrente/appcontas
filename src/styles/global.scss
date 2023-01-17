@@ -1,3 +1,7 @@
+:root {
+  --HMain: 95vh;
+}
+
 html {
   padding: 2vh;
 }
@@ -8,6 +12,8 @@ body {
   box-shadow: 1px 3px 12px 17px #888888;
   // height: auto;
   // height: 80vh;
+  height: var(--HMain);
+  overflow-y: scroll !important;
 }
 
 button {

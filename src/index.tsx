@@ -12,8 +12,6 @@ import "./styles/global.scss";
 
 const { REACT_APP_API_URL, NODE_ENV } = process.env;
 
-const nameHost = window.location.hostname;
-console.log("nameHost: ", nameHost);
 console.log("apiHost: ", REACT_APP_API_URL);
 console.log("environment: ", NODE_ENV);
 
