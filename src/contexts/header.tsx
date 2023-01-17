@@ -93,6 +93,7 @@ export function HeaderProvider({ children }: any) {
               flexWrap: "wrap",
               gap: ".5rem",
               padding: ".5rem 0",
+              alignItems: "center",
             }}
             className="header"
           >

@@ -1,13 +1,19 @@
 :root {
-  --HMain: 95vh;
+  --HMain: 90vh;
+  --HBtnLs: 80px;
+  --HBtnMd: calc(var(--HBtnLs) / 2);
+  --HBtnMs: calc(var(--HBtnMd) / 2);
 }
 
 html {
   padding: 2vh;
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 body {
-  padding: 5%;
+  padding: 4%;
   border-radius: 25px;
   box-shadow: 1px 3px 12px 17px #888888;
   // height: auto;

@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const StyledButton = styled.button`
   /* padding: 0.25rem !important; */
 
-  min-height: 40px;
+  /* min-height: 40px; */
+  height: var(--HBtnMd);
   min-width: 70px;
   display: flex;
   justify-content: center;
@@ -20,7 +21,7 @@ export const StyledButton = styled.button`
     font-weight: 500;
   }
 
-  @media (max-width: 600px) {
+  /* @media (max-width: 600px) {
     svg {
       width: 40px;
       height: 40px;
@@ -28,5 +29,5 @@ export const StyledButton = styled.button`
     .contentText {
       font-size: calc(1.5vw + 3px);
     }
-  }
+  } */
 `;
