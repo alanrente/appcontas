@@ -9,6 +9,7 @@ import axios from "axios";
 import App from "./App";
 
 import "./styles/global.scss";
+import "./styles/variables.scss";
 
 const { REACT_APP_API_URL, NODE_ENV } = process.env;
 

@@ -1,0 +1,15 @@
+:root {
+  // Alturas
+  --HMain: 90vh;
+  --HBtnLs: 80px;
+  --HBtnMd: calc(var(--HBtnLs) / 2);
+  --HBtnMs: calc(var(--HBtnMd) / 2);
+
+  // Cores
+  --main-bg-color: #f7f7f7;
+
+  // Larguras
+  // Espaçamentos
+  --itens-spacing-main: 2em;
+  --itens-spacing-ls: calc(var(--itens-spacing-main) / 2);
+}

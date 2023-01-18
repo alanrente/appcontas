@@ -1,6 +1,7 @@
-import { createContext, useState } from "react";
-import { AiOutlineHome, AiOutlineLogout } from "react-icons/ai";
+import { createContext, useEffect, useState } from "react";
+import { AiOutlineHome } from "react-icons/ai";
 import { FaFileInvoiceDollar, FaMoneyBillWaveAlt } from "react-icons/fa";
+import { FiLogOut } from "react-icons/fi";
 import { IoIosPeople } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 
@@ -8,9 +9,11 @@ import { Divider } from "@material-ui/core";
 
 import { Role } from "interfaces/Roles";
 import { TypeSession } from "interfaces/TypesSessions";
+import ThreeDots from "Skeletons/ThreeDots";
 import CardsImg from "static/svgs/cards_img";
 import { ButtonStyled } from "components/ButtonStyled";
 import { useLoginGoogle } from "components/LoginGoogle/index.hook";
+import { MenuHeader } from "components/MenuHeader";
 import { Cartao } from "pages/Cartao";
 import { Compra } from "pages/Compra";
 import { Devedor } from "pages/Devedor";
@@ -28,12 +31,16 @@ export type ButtonRoute = {
   component: () => JSX.Element;
   icon: JSX.Element;
   roles: Role[];
+  onClick?: () => any;
 };
 
 export function HeaderProvider({ children }: any) {
   const history = useHistory();
 
-  const { logout } = useLoginGoogle();
+  const { logout, googleUrlPhoto } = useLoginGoogle();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isModile, setIsMobile] = useState<boolean>(false);
 
   const [usuario] = useState(() => {
     const hasUserInSession = !!sessionStorage.getItem(TypeSession.keyUser);
@@ -43,6 +50,7 @@ export function HeaderProvider({ children }: any) {
       return true;
     }
 
+    history.push("/");
     return false;
   });
 
@@ -66,9 +74,12 @@ export function HeaderProvider({ children }: any) {
     },
   ];
 
-  function handleLogout() {
-    logout();
+  async function handleLogout() {
+    setIsLoading(true);
+    await logout();
+    // window.location.assign("/");
     window.location.assign("/");
+    setIsLoading(false);
   }
 
   function showButtonsFromRole() {
@@ -77,42 +88,65 @@ export function HeaderProvider({ children }: any) {
     return buttonRoutes.filter((btn) => btn.roles.some((role) => role === profile.role) || btn.roles.length === 0);
   }
 
+  useEffect(() => {
+    const width = screen.width;
+
+    if (width < 640) {
+      setIsMobile(true);
+    }
+  }, []);
+
   return (
-    <HeaderContext.Provider value={{ buttonRoutes }}>
-      {!usuario ? (
+    <HeaderContext.Provider value={{ buttonRoutes, isLoading, setIsLoading }}>
+      {!isLoading ? (
         <>
-          {history.push("/")}
-          <Login />
+          {!usuario ? (
+            <>
+              {history.push("/")}
+              <Login />
+            </>
+          ) : (
+            <div className={styleHeader.headerContext}>
+              {isModile ? (
+                <MenuHeader key={1} buttons={showButtonsFromRole()} />
+              ) : (
+                <div
+                  style={{
+                    display: `${isModile ? "none" : "flex"}`,
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    gap: ".5rem",
+                    padding: ".5rem 0",
+                    alignItems: "center",
+                  }}
+                  className="header"
+                >
+                  {showButtonsFromRole().map((route: ButtonRoute, index) => (
+                    <ButtonStyled
+                      key={`${index}`}
+                      content={route.text as string}
+                      onClick={() => history.push(route.uri)}
+                      icon={route.icon}
+                    />
+                  ))}
+                </div>
+              )}
+              <div className={styleHeader.logout}>
+                <MenuHeader
+                  key={2}
+                  right
+                  img={googleUrlPhoto}
+                  buttons={[{ uri: "", icon: <FiLogOut />, onClick: () => handleLogout() }]}
+                />
+              </div>
+            </div>
+          )}
         </>
       ) : (
-        <div className={styleHeader.headerContext}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: ".5rem",
-              padding: ".5rem 0",
-              alignItems: "center",
-            }}
-            className="header"
-          >
-            {showButtonsFromRole().map((route: ButtonRoute, index) => (
-              <ButtonStyled
-                key={`${index}`}
-                content={route.text as string}
-                onClick={() => history.push(route.uri)}
-                icon={route.icon}
-              />
-            ))}
-          </div>
-          <div className={styleHeader.logout}>
-            <ButtonStyled content="Logout" icon={<AiOutlineLogout />} onClick={handleLogout} />
-          </div>
-        </div>
+        <ThreeDots />
       )}
       <Divider />
-      {children}
+      {!isLoading ? children : <ThreeDots />}
     </HeaderContext.Provider>
   );
 }

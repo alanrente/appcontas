@@ -6,11 +6,15 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { IUserSession, TypeSession } from "interfaces/TypesSessions";
 import { googleAuth } from "services/auth";
 import { auth } from "services/firebase";
+import { useHeaderContext } from "hooks/useHeaderContext";
 
 export function useLoginGoogle() {
+  const { setIsLoading } = useHeaderContext();
+
   const [googleUrlPhoto, setGoogleUrlPhoto] = useState<string>();
 
-  async function login() {
+  async function loginGoogle() {
+    setIsLoading(true);
     const provider = new GoogleAuthProvider();
 
     const { user } = await signInWithPopup(auth, provider)
@@ -36,14 +40,15 @@ export function useLoginGoogle() {
       urlPhoto: user.photoURL,
     };
 
-    setGoogleUrlPhoto(userSession.urlPhoto);
+    await setGoogleUrlPhoto(userSession.urlPhoto);
 
     window.sessionStorage.setItem(TypeSession.keyUser, JSON.stringify(userSession));
 
     window.location.assign("/home");
+    setIsLoading(false);
   }
 
-  function logout() {
+  async function logout() {
     setGoogleUrlPhoto("");
     window.sessionStorage.removeItem(TypeSession.keyUser);
   }
@@ -58,7 +63,7 @@ export function useLoginGoogle() {
   }, []);
 
   return {
-    login,
+    loginGoogle,
     googleUrlPhoto,
     logout,
   };

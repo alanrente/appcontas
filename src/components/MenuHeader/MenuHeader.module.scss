@@ -1,0 +1,38 @@
+.contentButton {
+  gap: 5px;
+}
+
+.isRight {
+  right: 0;
+}
+
+.image {
+  height: 40px;
+  width: 40px;
+
+  border-radius: 25px;
+}
+
+.container {
+  position: absolute;
+  width: 150px;
+  border: 1px solid;
+  border-radius: 10px;
+  // min-height: 100px;
+  // z-index: 9999;
+  background-color: var(--main-bg-color);
+  flex-direction: column;
+
+  svg {
+    height: 30px;
+    width: 30px;
+  }
+}
+
+.visible {
+  display: flex;
+}
+
+.not-visible {
+  display: none;
+}

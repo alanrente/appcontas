@@ -3,8 +3,7 @@
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
-
-  height: calc(0.2 * var(--HMain));
+  padding: 0 0 var(--itens-spacing-ls);
 
   // gap: 2px;
 }
@@ -12,3 +11,4 @@
 .logout {
   align-self: center;
 }
+
