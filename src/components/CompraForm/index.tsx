@@ -8,7 +8,7 @@ type Props = {
 };
 
 export function CompraForm(props: Props) {
-  const { cartoes, pessoas, handleGetPessoas, formik } = useCompraForm();
+  const { cartoes, pessoas, handleGetPessoas, handleSetValor, formik } = useCompraForm();
 
   useEffect(() => {
     handleGetPessoas();
@@ -30,13 +30,16 @@ export function CompraForm(props: Props) {
           }}
         >
           <label htmlFor="valor">Valor:</label>
-          <input type="number" name="valor" id="valor" onChange={formik.handleChange} />
+          <input type="text" name="valor" id="valor" onChange={handleSetValor} value={formik.values.valor} />
 
           <label htmlFor="parcelas">Parcelas:</label>
           <input type="number" name="parcelas" id="parcelas" onChange={formik.handleChange} />
 
           <label htmlFor="cartoes">Cartões:</label>
           <select id="cartoes" name="cartaoId" onChange={formik.handleChange}>
+            <option id="0" value={0}>
+              Selecione o Cartão
+            </option>
             {cartoes.map((cartao) => (
               <option id={`${cartao.id}`} value={cartao.id}>
                 {`${cartao.nome}${cartao.final_numero ? ` (${cartao.final_numero})` : ""}`}
@@ -46,6 +49,9 @@ export function CompraForm(props: Props) {
 
           <label htmlFor="pessoas">Pessoas:</label>
           <select id="pessoas" name="pessoaId" onChange={formik.handleChange}>
+            <option id="0" value={0}>
+              Selecione a Pessoa
+            </option>
             {pessoas.map((pessoa) => (
               <option id={`${pessoa.id}`} value={pessoa.id}>
                 {`${pessoa.nome}${pessoa.apelido ? ` (${pessoa.apelido})` : ""}`}
