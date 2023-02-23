@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Modal } from "antd";
+import { InputMaskValor } from "components/InputMaskValor";
 import { useCompraForm } from "./index.hook";
 
 type Props = {
@@ -8,7 +9,14 @@ type Props = {
 };
 
 export function CompraForm(props: Props) {
-  const { cartoes, pessoas, handleGetPessoas, handleSetValor, formik } = useCompraForm();
+  const {
+    cartoes,
+    pessoas,
+    handleGetPessoas,
+    // handleSetValor,
+    formik,
+    setValorReal,
+  } = useCompraForm();
 
   useEffect(() => {
     handleGetPessoas();
@@ -30,7 +38,7 @@ export function CompraForm(props: Props) {
           }}
         >
           <label htmlFor="valor">Valor:</label>
-          <input type="text" name="valor" id="valor" onChange={handleSetValor} value={formik.values.valor} />
+          <InputMaskValor id="valor" name="valor" setValor={setValorReal} />
 
           <label htmlFor="parcelas">Parcelas:</label>
           <input type="number" name="parcelas" id="parcelas" onChange={formik.handleChange} />
