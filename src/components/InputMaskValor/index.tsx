@@ -7,7 +7,7 @@ type Props = {
   id?: string;
   name?: string;
   // eslint-disable-next-line no-unused-vars
-  setValor?: (valorADefinir?: any) => any;
+  setValor: (valorADefinir?: any) => any;
 };
 
 export function InputMaskValor(props: Props) {
