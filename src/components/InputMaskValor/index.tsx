@@ -3,7 +3,7 @@ import { useInputMaskValor } from "./index.hook";
 type Props = {
   // eslint-disable-next-line no-unused-vars
   onChange?: (event: any) => void;
-  value?: string | number | readonly string[];
+  // value?: string | number | readonly string[];
   id?: string;
   name?: string;
   // eslint-disable-next-line no-unused-vars
