@@ -2,36 +2,33 @@ import { useEffect } from "react";
 
 import { useFormik } from "formik";
 
-import { obterUmCartao } from "services/cartoes";
+import { Cartao } from "interfaces/Cartao";
 
-export function useCartaoForm(idCartao?: number) {
+export function useCartaoForm(cartao?: Cartao) {
   const formik = useFormik({
     initialValues: {
-      bank: "",
+      nome: "",
+      dia_vencimento: 10,
+      final_numero: "",
+      obs: "",
     },
     onSubmit: (values) => {
-      // eslint-disable-next-line no-console
-      console.log(values);
+      console.log("values formik cartoesform", values);
     },
   });
 
-  async function handleLoadCartao(id?: number) {
-    if (!id) return;
-    const data = await obterUmCartao(id);
-
-    if (!data) return;
-
-    formik.setValues(data);
-  }
-
   useEffect(() => {
-    if (!idCartao) return;
+    if (!cartao) return;
 
-    handleLoadCartao(idCartao);
+    console.log(cartao);
+
+    formik.setFieldValue("nome", cartao.nome);
+    formik.setFieldValue("dia_vencimento", cartao.dia_vencimento);
+    formik.setFieldValue("final_numero", cartao.final_numero);
+    formik.setFieldValue("obs", cartao.obs);
   }, []);
 
   return {
     formik,
-    handleLoadCartao,
   };
 }

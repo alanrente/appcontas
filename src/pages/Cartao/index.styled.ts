@@ -44,4 +44,19 @@ export const SectionCartao = styled.section`
   gap: 1.5rem;
 
   z-index: 1;
+
+  .btn-addCartao {
+    background-color: transparent;
+    width: 100%;
+    height: 3rem;
+    border: 1px solid;
+    max-width: none;
+    border-radius: 20px;
+
+    :hover {
+      background-color: #f1f1f1;
+      box-shadow: 3px 4px 10px 0px;
+      cursor: pointer;
+    }
+  }
 `;

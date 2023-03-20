@@ -7,17 +7,15 @@ import { obterCartoes } from "services/cartoes";
 export function useCartao() {
   const [visible, setVisible] = useState(false);
   const [cartoes, setCartoes] = useState<Cartao[]>([]);
-  const [idCartao, setIdCartao] = useState<number>(NaN);
+  const [cartaoToOpen, setCartaoToOpen] = useState<Cartao>();
 
-  function handleOpenModal(idCartao: number) {
+  function handleOpenModal(idCartao?: Cartao) {
+    setCartaoToOpen(idCartao);
     setVisible(true);
-    setIdCartao(idCartao);
   }
 
   async function handleLoadCartoes() {
     const data: Cartao[] = await obterCartoes();
-
-    console.log(data);
 
     const tempCartao: Cartao[] = [
       {
@@ -38,7 +36,7 @@ export function useCartao() {
   return {
     cartoes,
     handleOpenModal,
-    idCartao,
+    cartaoToOpen,
     setVisible,
     visible,
   };
