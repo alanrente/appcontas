@@ -29,7 +29,10 @@ export function CompraForm(props: Props) {
         onCancel={props.onCancel}
         closable={false}
         destroyOnClose
-        onOk={(e: any) => formik.handleSubmit(e)}
+        onOk={(e: any) => {
+          formik.handleSubmit(e);
+          props.onCancel && props.onCancel();
+        }}
       >
         <div
           style={{

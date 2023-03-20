@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useFormik } from "formik";
+import { Compra } from "interfaces/Compra";
 import { Devedores } from "interfaces/Devedores";
 import { useCartao } from "pages/Cartao/index.hook";
+import { postNovaCompra } from "services/compras";
 import { getDevedores } from "services/devedores";
 
 export function useCompraForm() {
@@ -19,9 +21,25 @@ export function useCompraForm() {
       data_compra: "",
     },
     onSubmit: async (values) => {
-      console.log({ ...values, cartaoId: +values.cartaoId, pessoaId: +values.pessoaId, valor: valorReal });
+      const novaCompraValues = {
+        ...values,
+        cartaoId: +values.cartaoId,
+        pessoaId: +values.pessoaId,
+        valor: valorReal,
+        parcelas: values.parcelas > 0 ? values.parcelas : 1,
+      };
+
+      await handleNovaCompra(novaCompraValues);
     },
   });
+
+  async function handleNovaCompra(novaCompra: Compra) {
+    try {
+      await postNovaCompra(novaCompra);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function handleGetPessoas() {
     const _pessoas = await getDevedores();

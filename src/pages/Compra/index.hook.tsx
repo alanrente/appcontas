@@ -13,6 +13,7 @@ export function useCompra() {
     if (!_lancamentos) return setLancamentos([]);
 
     setLancamentos(_lancamentos);
+    console.log("_lancamentos", _lancamentos);
   }
 
   async function handleGetCompras() {
