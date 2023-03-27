@@ -3,23 +3,16 @@ import { Cartao } from "interfaces/Cartao";
 import { NumberCard, StyledCard } from "./styled";
 
 interface Prop {
-  onClick: () => void;
+  // eslint-disable-next-line no-unused-vars
+  onClick: (cartao?: any) => void;
   children?: any;
   cartao: Cartao;
 }
 
 export function Card({ onClick, children, cartao }: Prop) {
   function handleOnClick() {
-    console.log(cartao);
-    onClick();
+    onClick(cartao);
   }
-
-  // function handleFormatDate(date: string) {
-  //   console.log(date);
-  //   const [year, month, day] = date.split("-");
-
-  //   return `${day}/${month}/${year}`;
-  // }
 
   return (
     <StyledCard onClick={handleOnClick}>

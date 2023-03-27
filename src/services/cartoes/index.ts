@@ -1,12 +1,13 @@
+import { getBearerToken } from "utils/getBearerToken";
 import axios, { AxiosRequestConfig } from "axios";
+import { useLoginGoogle } from "components/LoginGoogle/index.hook";
 
 export async function obterCartoes() {
   const options: AxiosRequestConfig = {
     method: "GET",
     url: `/cartoes`,
     headers: {
-      accept: "*/*",
-      "content-type": "application/json",
+      Authorization: getBearerToken(),
     },
   };
 
@@ -25,7 +26,13 @@ export async function obterUmCartao(id: number) {
     },
   };
 
-  const { data } = await axios.request(options);
+  try {
+    const { data } = await axios.request(options);
 
-  return data;
+    return data;
+  } catch (err) {
+    const { logout } = useLoginGoogle();
+
+    logout();
+  }
 }

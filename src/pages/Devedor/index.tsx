@@ -1,23 +1,50 @@
-import { useEffect } from "react";
-
-import { Typography } from "@material-ui/core";
-
-import { getDevedores } from "../../services/devedores/index";
+import { BiEdit } from "react-icons/bi";
+import { ContainerScrolable } from "components/ContainerScrolable";
+import { useDevedor } from "./index.hook";
 
 export function Devedor() {
-  async function handleGetDevedores() {
-    const data = await getDevedores();
-
-    return data;
-  }
-
-  useEffect(() => {
-    handleGetDevedores();
-  }, []);
+  const { pessoas } = useDevedor();
 
   return (
-    <>
-      <Typography variant="h4">Devedor</Typography>
-    </>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "calc(0.68 * var(--HMain))",
+      }}
+    >
+      <ContainerScrolable>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "1rem",
+            padding: "0.5rem 0",
+          }}
+        >
+          {pessoas &&
+            pessoas.map((pessoa, i) => (
+              <div
+                key={i}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: "65%",
+                  border: "solid 1px",
+                  borderRadius: "25px",
+                  padding: "0 .5rem",
+                  fontWeight: "bold",
+                }}
+              >
+                <label>{pessoa.nome}</label>
+                <BiEdit />
+              </div>
+            ))}
+        </div>
+      </ContainerScrolable>
+    </div>
   );
 }

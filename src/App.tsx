@@ -2,7 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import "./App.css";
 import { HeaderProvider } from "./contexts/header";
-import Routes from "./routes";
+import Main from "./pages/Main";
 import "./static/cadastroDevedores.css";
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <HeaderProvider>
-          <Routes />
+          <Main />
         </HeaderProvider>
       </BrowserRouter>
     </div>

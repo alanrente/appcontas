@@ -1,10 +1,11 @@
+import { MdOutlineDisabledByDefault } from "react-icons/md";
 import { StyledButton } from "./index.styled";
 import { ButtonProps } from "./index.types";
 
-export function ButtonStyled({ content, onClick }: ButtonProps) {
+export function ButtonStyled({ content, onClick, icon }: ButtonProps) {
   return (
-    <StyledButton variant="outlined" onClick={onClick}>
-      <label className="contentText">{content}</label>
+    <StyledButton className="contentText" onClick={onClick} title={content}>
+      {icon || <MdOutlineDisabledByDefault />}
     </StyledButton>
   );
 }
