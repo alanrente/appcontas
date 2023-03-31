@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { HiOutlinePlus } from "react-icons/hi";
 import { ButtonStyled } from "components/ButtonStyled";
 import { CompraForm } from "components/CompraForm";
@@ -14,10 +14,17 @@ export function Compra() {
     setVisibleFormCompras,
   } = useCompra();
 
+  const [valor, setValor] = useState<number>();
+
   useEffect(() => {
     handleGetCompras();
     handleGetLancamentos();
   }, []);
+
+  function handleSetCompraComValor(valor?: number) {
+    setValor(valor);
+    setVisibleFormCompras(true);
+  }
 
   return (
     <>
@@ -27,8 +34,8 @@ export function Compra() {
           justifyContent: "space-evenly",
         }}
       >
-        <h1>Page Compra</h1>
-        <ButtonStyled content="Novo" onClick={() => setVisibleFormCompras(true)} icon={<HiOutlinePlus />} />
+        <h1>Compra</h1>
+        <ButtonStyled content="Novo" onClick={() => handleSetCompraComValor()} icon={<HiOutlinePlus />} />
       </div>
       <label>Compras:</label>
       {compras &&
@@ -38,7 +45,7 @@ export function Compra() {
               listStyleType: "none",
             }}
           >
-            <p>
+            <p onClick={() => handleSetCompraComValor(compra.valor)}>
               Valor: {compra.valor}; Parcelas: {compra.parcelas}; Data: {compra.data_compra.split("-")[2]}/
               {compra.data_compra.split("-")[1]}/{compra.data_compra.split("-")[0]}; Pessoa:{" "}
               {`${compra.pessoa}`.toLowerCase()}; Cartão: {compra.cartao}
@@ -47,7 +54,7 @@ export function Compra() {
             {/* <p>{`${JSON.stringify(compra)}`}</p> */}
           </li>
         ))}
-      <CompraForm visible={visibleFormCompras} onCancel={() => setVisibleFormCompras(false)} />
+      <CompraForm visible={visibleFormCompras} onCancel={() => setVisibleFormCompras(false)} valorCompra={valor} />
     </>
   );
 }

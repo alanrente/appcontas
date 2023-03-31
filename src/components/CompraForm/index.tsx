@@ -6,6 +6,7 @@ import { useCompraForm } from "./index.hook";
 type Props = {
   visible: boolean;
   onCancel?: () => void;
+  valorCompra?: number;
 };
 
 export function CompraForm(props: Props) {
@@ -41,7 +42,7 @@ export function CompraForm(props: Props) {
           }}
         >
           <label htmlFor="valor">Valor:</label>
-          <InputMaskValor id="valor" name="valor" setValor={setValorReal} />
+          <InputMaskValor id="valor" name="valor" setValor={setValorReal} initialValue={props.valorCompra} />
 
           <label htmlFor="parcelas">Parcelas:</label>
           <input type="number" name="parcelas" id="parcelas" onChange={formik.handleChange} />

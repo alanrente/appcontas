@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export function useInputMaskValor(setValor: any) {
+export function useInputMaskValor(setValor: any, initialValue?: number) {
   // const [valorReal, setValorReal] = useState(0);
   const [outputMaskValor, setoutputMaskValor] = useState("0,00");
 
@@ -42,12 +42,13 @@ export function useInputMaskValor(setValor: any) {
   }
 
   function handleSetValor(event: any) {
-    const strValorRecebido = `${event.target.value}`;
+    const strValorRecebido = event ? `${event.target.value}` : `${Number(initialValue) * 100}`;
+    if (!strValorRecebido) return;
+
     const maskValorSemMilhar = handleMaskValor(strValorRecebido);
 
     const parteFracionado = Number(maskValorSemMilhar.replace(",", "."));
 
-    // setValorReal(parteFracionado);
     setValor(parteFracionado);
 
     const maskValorComMilhar = `${handleMaskPointerValor(maskValorSemMilhar.split(",")[0])},${
@@ -56,6 +57,11 @@ export function useInputMaskValor(setValor: any) {
 
     setoutputMaskValor(maskValorComMilhar);
   }
+
+  useEffect(() => {
+    if (!initialValue) return;
+    handleSetValor(null);
+  }, []);
 
   return { handleSetValor, outputMaskValor };
 }
