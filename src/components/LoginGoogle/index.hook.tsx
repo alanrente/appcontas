@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 
-import { FirebaseError } from "firebase/app";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import { IUserSession, TypeSession } from "interfaces/TypesSessions";
@@ -17,12 +16,7 @@ export function useLoginGoogle() {
     setIsLoading(true);
     const provider = new GoogleAuthProvider();
 
-    const { user } = await signInWithPopup(auth, provider)
-      .then((res) => res)
-      .catch((err: FirebaseError) => {
-        alert(err.code);
-        throw new Error(err.code);
-      });
+    const { user } = await signInWithPopup(auth, provider);
 
     if (!user) return;
     if (!user.email) return;
@@ -31,7 +25,12 @@ export function useLoginGoogle() {
 
     const userAuth = await googleAuth(user.email, user.uid);
 
-    if (!userAuth) return;
+    if (!userAuth) {
+      alert("Conta não autorizada!");
+      window.location.assign("/");
+      setIsLoading(false);
+      return;
+    }
 
     const userSession: IUserSession = {
       user: user.displayName,
