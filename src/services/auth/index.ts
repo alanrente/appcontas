@@ -8,13 +8,14 @@ export async function googleAuth(username: string, googleUid: string) {
       status,
     }))
     .catch((err) => {
-      alert(err.message);
-      throw Error(err);
+      console.log("googleAuth error:", err);
     });
+
+  if (!user) return;
 
   const { data: profile } = await axios.get("/profile", {
     headers: {
-      Authorization: `Bearer ${user.token?.access_token}`,
+      Authorization: `Bearer ${user?.token?.access_token}`,
     },
   });
 
