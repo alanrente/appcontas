@@ -39,7 +39,7 @@ export function useLoginGoogle() {
       urlPhoto: user.photoURL,
     };
 
-    await setGoogleUrlPhoto(userSession.urlPhoto);
+    setGoogleUrlPhoto(userSession.urlPhoto);
 
     window.sessionStorage.setItem(TypeSession.keyUser, JSON.stringify(userSession));
 
