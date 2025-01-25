@@ -1,58 +1,54 @@
+// import { ContainerScrolable } from "components/ContainerScrolable";
+import { Table } from "antd";
 import style from "./Gasto.module.scss";
 import { useGasto } from "./index.hook";
 
 export function Gasto() {
-  const { faturaMes } = useGasto();
+  const { faturaMes, columns } = useGasto();
 
   return (
-    <>
-      <div
-        // TODO: passar parar scss
-        style={{
-          marginTop: "25px",
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          gap: "1em",
-        }}
-      >
-        {faturaMes.map(({ pessoa, cartao, data_compra, descricao, valor, parcelas }) => (
-          <div
-            // TODO: transformar em um component
-            style={{
-              width: "300px",
-              padding: "8px",
-              border: "solid 2px",
-              borderRadius: "8px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.2em",
-            }}
-          >
-            <div className={style.header}>{pessoa}</div>
-            <div
-              style={{
-                justifyContent: "space-between",
-                display: "flex",
-              }}
-            >
-              <span>Cartão: {cartao}</span>
-              <span>Compra: {data_compra}</span>
-            </div>
-            <div
-              style={{
-                justifyContent: "space-between",
-                display: "flex",
-              }}
-            >
-              <span>Valor: R$ {String(valor.toFixed(2)).replace(".", ",")}</span>
-              <span>Parcela: {parcelas}</span>
-            </div>
-
-            <div className={style.descricao}>{descricao}</div>
-          </div>
-        ))}
-      </div>
-    </>
+    <Table
+      className={style.tabela}
+      size="middle"
+      dataSource={faturaMes.map(({ id, ...fat }) => ({ key: id, ...fat }))}
+      columns={columns as any}
+      scroll={{ x: "calc(700px + 50%)", y: "calc(0.6 * var(--HMain))" }}
+    />
+    // <ContainerScrolable
+    //   {...{
+    //     className: style.tabela,
+    //   }}
+    // >
+    //   <table>
+    //     <thead>
+    //       <tr>
+    //         {faturaMes.length > 0 &&
+    //           Object.keys(faturaMes[0])
+    //             .filter((key) => !key.includes("id"))
+    //             .map((key) => (
+    //               <th
+    //                 style={{
+    //                   width: key === "descricao" ? "250px" : "",
+    //                 }}
+    //                 className={style["header-table"]}
+    //                 key={key}
+    //               >
+    //                 {key.replace("_", " ")}
+    //               </th>
+    //             ))}
+    //       </tr>
+    //     </thead>
+    //     <tbody>
+    //       {faturaMes.map((fatura: any) => (
+    //         <tr key={fatura.id}>
+    //           {faturaMes &&
+    //             Object.keys(fatura)
+    //               .filter((key) => !key.includes("id"))
+    //               .map((key) => <td key={key}>{fatura[key]}</td>)}
+    //         </tr>
+    //       ))}
+    //     </tbody>
+    //   </table>
+    // </ContainerScrolable>
   );
 }
