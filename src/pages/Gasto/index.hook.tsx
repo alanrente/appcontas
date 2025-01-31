@@ -5,6 +5,12 @@ import { GastoMapped } from "interfaces/Gasto";
 
 import { getFaturas } from "services/gastos";
 
+interface ColumnsGastos {
+  title: string;
+  dataIndex: string;
+  key: string;
+}
+
 export function useGasto() {
   const [faturaMes, setFaturaMes] = useState<GastoMapped[]>([]);
   const [columns, setColumns] = useState<ColumnsType>([]);
@@ -25,13 +31,16 @@ export function useGasto() {
       };
     });
 
-    const columns = Object.keys(newGastos[0]).map((key) => ({
-      title: key.replace("_", " "),
-      dataIndex: key,
-      key,
-    }));
+    const columns: ColumnsGastos[] = Object.keys(newGastos[0])
+      .map((key) => ({
+        title: key.replace("_", " "),
+        dataIndex: key,
+        key,
+        textWrap: "word-break",
+      }))
+      .filter((column) => !column.key.includes("id"));
 
-    setColumns(columns.filter((column) => !column.key.includes("id")) as ColumnsType);
+    setColumns(columns);
 
     setFaturaMes(newGastos);
   }
