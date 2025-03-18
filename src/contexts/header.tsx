@@ -3,6 +3,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { FaFileInvoiceDollar, FaMoneyBillWaveAlt } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { IoIosPeople } from "react-icons/io";
+import { RiFolderUserLine } from "react-icons/ri";
 import { useHistory } from "react-router-dom";
 
 import { Divider } from "@material-ui/core";
@@ -21,6 +22,8 @@ import { Gasto } from "pages/Gasto";
 import { Home } from "pages/Home";
 import { Login } from "pages/Login";
 
+import ProfilesPage from "pages/Profiles";
+import getUserSession from "utils/getUserSession";
 import styleHeader from "../styles/HeaderContext.module.scss";
 
 export const HeaderContext = createContext<any>([]);
@@ -37,12 +40,13 @@ export type ButtonRoute = {
 export function HeaderProvider({ children }: any) {
   const history = useHistory();
 
-  const { logout, googleUrlPhoto } = useLoginGoogle();
+  const { logout } = useLoginGoogle();
 
+  const googleUrlPhoto = getUserSession().urlPhoto;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModile, setIsMobile] = useState<boolean>(false);
 
-  const [usuario] = useState(() => {
+  const [hasUser] = useState(() => {
     const hasUserInSession = !!sessionStorage.getItem(TypeSession.keyUser);
 
     if (hasUserInSession) {
@@ -55,8 +59,15 @@ export function HeaderProvider({ children }: any) {
   });
 
   const buttonRoutes: ButtonRoute[] = [
-    { text: "Home", uri: "/home", component: () => <Home />, icon: <AiOutlineHome />, roles: [] },
+    { text: "Home", uri: "/home", component: () => <Home />, icon: <AiOutlineHome />, roles: [Role.USER, Role.ADMIN] },
     { text: "Devedores", uri: "/devedores", component: () => <Devedor />, icon: <IoIosPeople />, roles: [Role.ADMIN] },
+    {
+      text: "Perfis",
+      uri: "/profiles",
+      component: () => <ProfilesPage />,
+      icon: <RiFolderUserLine />,
+      roles: [Role.ADMIN],
+    },
     { text: "Cartões", uri: "/cartoes", component: () => <Cartao />, icon: <CardsImg />, roles: [Role.ADMIN] },
     {
       text: "Gastos",
@@ -66,7 +77,7 @@ export function HeaderProvider({ children }: any) {
       roles: [Role.USER, Role.ADMIN],
     },
     {
-      text: "Compras",
+      text: "Compras pendentes",
       uri: "/compras",
       component: () => <Compra />,
       icon: <FaMoneyBillWaveAlt />,
@@ -82,8 +93,13 @@ export function HeaderProvider({ children }: any) {
     setIsLoading(false);
   }
 
+  function getProfileSession() {
+    const { profile } = getUserSession();
+    return profile;
+  }
+
   function showButtonsFromRole() {
-    const { profile } = JSON.parse(window.sessionStorage.getItem(TypeSession.keyUser) || "{}");
+    const profile = getProfileSession();
 
     return buttonRoutes.filter((btn) => btn.roles.some((role) => role === profile.role) || btn.roles.length === 0);
   }
@@ -97,10 +113,10 @@ export function HeaderProvider({ children }: any) {
   }, []);
 
   return (
-    <HeaderContext.Provider value={{ buttonRoutes, isLoading, setIsLoading }}>
+    <HeaderContext.Provider value={{ buttonRoutes, isLoading, setIsLoading, user: getUserSession() }}>
       {!isLoading ? (
         <>
-          {!usuario ? (
+          {!hasUser ? (
             <>
               {history.push("/")}
               <Login />

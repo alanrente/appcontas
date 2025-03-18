@@ -1,8 +1,31 @@
+table {
+  background-color: rgb(221, 221, 221);
+}
+
+.tabela {
+  height: calc(0.5 * var(--HMain)); // Corrigido para remover as aspas
+}
+
+.header-table {
+  // fixar o cabeçalho da tabela no topo
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  border: solid 1px;
+  background-color: rgb(139, 139, 139);
+}
+
 .descricao {
   border: dotted 1px;
   text-align: left;
   padding: 2px;
+}
 
+th {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.2rem;
+  width: 40px;
 }
 
 .descricao:first-letter {
@@ -13,7 +36,6 @@
   letter-spacing: 2px;
   font-weight: 500;
   font-size: medium;
-
   background-color: rgba(202, 202, 202, 0.459);
   border-radius: 25px 25px 0 0;
 }
