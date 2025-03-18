@@ -23,6 +23,8 @@ export function useLoginGoogle() {
     if (!user.displayName) return;
     if (!user.photoURL) return;
 
+    setGoogleUrlPhoto(user.photoURL);
+
     const userAuth = await googleAuth(user.email, user.uid);
 
     if (!userAuth) {
@@ -38,8 +40,6 @@ export function useLoginGoogle() {
       profile: userAuth.profile,
       urlPhoto: user.photoURL,
     };
-
-    setGoogleUrlPhoto(userSession.urlPhoto);
 
     window.sessionStorage.setItem(TypeSession.keyUser, JSON.stringify(userSession));
 
@@ -58,7 +58,7 @@ export function useLoginGoogle() {
 
     if (Object.keys(userSession).length === 0) return;
 
-    setGoogleUrlPhoto(userSession.urlPhoto as string);
+    setGoogleUrlPhoto(userSession.urlPhoto);
   }, []);
 
   return {

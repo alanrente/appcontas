@@ -40,8 +40,9 @@ export type ButtonRoute = {
 export function HeaderProvider({ children }: any) {
   const history = useHistory();
 
-  const { logout, googleUrlPhoto } = useLoginGoogle();
+  const { logout } = useLoginGoogle();
 
+  const googleUrlPhoto = getUserSession().urlPhoto;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModile, setIsMobile] = useState<boolean>(false);
 
@@ -76,7 +77,7 @@ export function HeaderProvider({ children }: any) {
       roles: [Role.USER, Role.ADMIN],
     },
     {
-      text: "Compras",
+      text: "Compras pendentes",
       uri: "/compras",
       component: () => <Compra />,
       icon: <FaMoneyBillWaveAlt />,
